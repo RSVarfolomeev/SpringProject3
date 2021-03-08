@@ -1,0 +1,7 @@
+files\config\AppConfig.class
+files\controller\ProductController.class
+files\product\Product.class
+files\config\WebInitializer.class
+files\Application.class
+files\product\Cart.class
+files\product\ProductRepository.class
