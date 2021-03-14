@@ -1,23 +1,29 @@
 package files.controller;
 
 import files.product.Product;
+import files.product.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class ProductController {
 
-    @GetMapping(value = "/json",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String returnProductJson(){
-        Product product = new Product(1,"Product-1",100);
-        return product.toString();
-    }
+    @Autowired
+    ProductRepository productRepository;
 
-    @GetMapping(value = "/xml",produces = "applicaton/xml")
-    public String returnProductXml(){
-        Product product = new Product(5,"Product-2",1000);
-        return product.toString();
+    @GetMapping("/xml/get")
+    public String returnProductXml(Model model){
+        Product product = productRepository.getProductListById(1);
+        int id = product.getId();
+        String name = product.getName();
+        float price = product.getPrice();
+        model.addAttribute("id", id);
+        model.addAttribute("name", name);
+        model.addAttribute("price", price);
+        return "index";
     }
 
     @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
